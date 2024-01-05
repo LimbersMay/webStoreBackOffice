@@ -16,7 +16,7 @@ export const AppRouter = () => {
         <Routes>
             {
                 status === authStatusTypes.authenticated
-                    ? <Route path="/*" element={<div />}/>
+                    ? <Route path="/*" element={<div>Authenticated</div>}/>
                     : <>
                         <Route path="/auth/*" element={<AuthRouter />}/>
                     </>
