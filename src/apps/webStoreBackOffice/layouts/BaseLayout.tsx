@@ -14,7 +14,7 @@ interface BaseLayoutProps {
 
 export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
 
-    const { displayName, role , startLogout } = useAuthStore();
+    const { displayName , startLogout } = useAuthStore();
 
     const handleLogout = () => {
         startLogout();
@@ -40,7 +40,7 @@ export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
                         to="/"
                         className={isActiveLink}
                     >
-                        BelgSoft
+                        Ecommerce Online
                     </NavLink>
                 </div>
 
@@ -65,7 +65,7 @@ export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
                                 </button>
 
                                 <div className="self-center text-sm text-neutral-400">
-                                    { displayName } ({ role && role.charAt(0).toUpperCase() + role.slice(1).toLowerCase() })
+                                    { displayName }
                                 </div>
                             </div>
                         )
