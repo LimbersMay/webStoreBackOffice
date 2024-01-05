@@ -16,6 +16,7 @@ export const Field = ({ type, name, fieldName }: FieldProps ) => {
             <FormikField
                 type={type}
                 name={name}
+                id={name}
                 placeholder={fieldName ?? firstCapitalLetter(name)}
                 className="w-96 rounded-md p-2"
             />
