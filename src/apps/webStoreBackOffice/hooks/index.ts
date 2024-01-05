@@ -1,2 +1,2 @@
-export * from './useCheckAuth';
+export * from './useCheckAuth.ts';
 export * from './useAuthStore.ts';

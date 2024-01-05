@@ -1,1 +1,1 @@
-export * from './belgsoftApi';
+export * from './belgsoftApi.ts';
