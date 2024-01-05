@@ -6,14 +6,14 @@ import * as Yup from 'yup';
 import {useAuthStore} from "../../hooks";
 
 interface FormValues {
-    username: string;
+    displayName: string;
     email: string;
     password: string;
     repeatPassword: string;
 }
 
 const initialValues: FormValues = {
-    username: '',
+    displayName: '',
     email: '',
     password: '',
     repeatPassword: ''
@@ -24,11 +24,10 @@ export const Register = () => {
     const { startCreatingUser } = useAuthStore();
 
     const onSubmit = async (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
-        await startCreatingUser({
-            name: values.username,
-            email: values.email,
-            password: values.password
-        });
+
+        console.log(values);
+
+        await startCreatingUser({ ...values });
 
         setSubmitting(false);
     }
@@ -39,7 +38,7 @@ export const Register = () => {
                 initialValues={{ ...initialValues }}
                 onSubmit={onSubmit}
                 validationSchema={Yup.object({
-                    username: Yup.string()
+                    displayName: Yup.string()
                         .min(4, 'Must be 4 characters or more')
                         .required('Required'),
                     email: Yup.string()
@@ -60,10 +59,11 @@ export const Register = () => {
                         <Form className="flex flex-col gap-5">
                             <Field
                                 type="text"
-                                name="username"
+                                name="displayName"
+                                fieldName={"Username"}
                             />
 
-                            <ErrorMessage name={"username"} component="div" className="text-red-500"/>
+                            <ErrorMessage name={"displayName"} component="div" className="text-red-500"/>
 
                             <Field
                                 type="email"
