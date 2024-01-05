@@ -1,23 +1,18 @@
+import {Navigate, Route, Routes} from "react-router-dom";
+import {Home, Products} from "../backoffice";
 
-export const AppRouter = () => {
-
-    const status = useCheckAuth();
-
-    if (status === authStatusTypes.checking) {
-        return <CheckingAuth />;
-    }
+export const WebStoreBackOfficeRouter = () => {
 
     return (
         <Routes>
-            {
-                status === authStatusTypes.authenticated
-            ? <Route path="/*" element={<div>Authenticated</div>}/>
-: <>
-        <Route path="/auth/*" element={<AuthRouter />}/>
-    </>
-}
+            <Route path="/webStore" element={<Home />}/>
 
-    <Route path="/*" element={<Navigate to="/auth/login" />}/>
-    </Routes>
-)
+            <Route
+                path="/products"
+                element={<Products />}
+            />
+
+            <Route path="/*" element={<Navigate to="/webStore" />}/>
+        </Routes>
+    )
 }
