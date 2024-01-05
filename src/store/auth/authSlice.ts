@@ -4,25 +4,19 @@ import {authStatusTypes} from "../../auth/types";
 
 // Define a type for the slice state
 export interface AuthState {
-    branchId?: string | null;
     status?: string;
-    uid: string | null;
-    email: string | null;
-    displayName: string | null;
+    uid: string | undefined;
+    email: string | null | undefined;
+    displayName: string | undefined | null;
     errorMessage?: string | null;
-    role?: string | null;
-    userType?: string | null;
 }
 
 const initialState: AuthState = {
-    branchId: null,
     status: authStatusTypes.checking,
-    uid: null,
+    uid: undefined,
     email: null,
-    displayName: null,
+    displayName: undefined,
     errorMessage: null,
-    role: null,
-    userType: null,
 }
 
 export const authSlice = createSlice({
@@ -30,20 +24,17 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, { payload }: PayloadAction<AuthState>) => {
-            state.branchId = payload.branchId;
             state.status = authStatusTypes.authenticated;
             state.uid = payload.uid;
             state.email = payload.email;
             state.displayName = payload.displayName;
-            state.role = payload.role;
-            state.userType = payload.userType;
-            state.errorMessage = null;
+            state.errorMessage = undefined;
         },
         logout: (state, { payload }: PayloadAction<string | null>) => {
             state.status = authStatusTypes.notAuthenticated;
-            state.uid = null;
+            state.uid = undefined;
             state.email = null;
-            state.displayName = null;
+            state.displayName = undefined;
             state.errorMessage = payload;
         },
         checkingCredentials: (state) => {
