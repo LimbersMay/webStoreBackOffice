@@ -1,68 +1,63 @@
 import {checkingCredentials, login, logout, selectAuth, useAppDispatch, useAppSelector} from "../store";
-import {belgsoftApi} from "../api";
-import {useNavigate} from "react-router-dom";
+import {loginLocal, logoutFirebase, signInLocal, signInWithGoogle} from "../firebase/firebase.ts";
+import {authStatusTypes} from "../auth/types";
 
 
 interface CreatingUserProps {
-    name: string;
+    displayName: string;
     email: string;
     password: string;
 }
 
 export const useAuthStore = () => {
 
-    const {uid, branchId, displayName, role, email, userType} = useAppSelector(selectAuth);
+    const {uid, displayName, email} = useAppSelector(selectAuth);
 
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
-    const startCreatingUser = async ({name, email, password}: CreatingUserProps) => {
+    const startGoogleSignIn = async () => {
         dispatch(checkingCredentials());
 
-        // Async call to create user
-        await belgsoftApi.post('/auth/register', {
-            name,
-            email,
-            password
-        });
+        const result = await signInWithGoogle();
 
-        // navigate to login page
-        navigate('/login');
+        if (!result.ok) return dispatch(logout( result.errorMessage ));
+
+        return dispatch(login({
+            uid: result.uid,
+            displayName: result.displayName,
+            email: result.email,
+            status: authStatusTypes.authenticated
+        }))
     }
 
-    const startLogin = async (email: string, password: string) => {
+    const startCreatingUser = async ({displayName, email, password}: CreatingUserProps) => {
+
+        const { ok, uid, errorMessage } = await signInLocal({ displayName, email, password });
+
+        console.log({ok, uid, errorMessage})
+
+        if (!ok) return dispatch(logout( errorMessage ));
+
+        dispatch(login({uid, displayName, email }));
+    }
+
+    const startLoginUser = async (email: string, password: string) => {
         dispatch(checkingCredentials());
 
-        try {
-            const response = await belgsoftApi.post('/auth/login', {
-                email,
-                password
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
+        const { ok, uid, displayName, errorMessage } = await loginLocal({email, password});
 
-            const {user, token} = response.data;
+        if (!ok) return dispatch(logout( errorMessage));
 
-            // Save token in local storage
-            localStorage.setItem('token', token);
-
-            dispatch(login({
-                branchId: user.branchId,
-                uid: user.id,
-                displayName: user.name,
-                email: user.email,
-                role: user.role,
-                userType: user.userType,
-            }));
-        } catch (error) {
-            dispatch(logout(null));
-        }
+        // Assert uid and displayName are not null
+        if (uid && displayName)
+            dispatch(login({uid, displayName, email }));
     }
 
-    const startLogout = () => {
-        localStorage.removeItem('token');
+    const startLogout = async () => {
+        dispatch(checkingCredentials());
+
+        await logoutFirebase();
+
         dispatch(logout(null));
     }
 
@@ -70,14 +65,12 @@ export const useAuthStore = () => {
         // properties
         uid,
         displayName,
-        role,
         email,
-        userType,
-        branchId,
 
         // methods
+        startGoogleSignIn,
         startCreatingUser,
-        startLogin,
+        startLoginUser,
         startLogout
     }
 }
