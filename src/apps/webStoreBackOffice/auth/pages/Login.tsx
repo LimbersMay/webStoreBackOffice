@@ -16,10 +16,10 @@ const initialValues: FormValues = {
 
 export const Login = () => {
 
-    const { startLogin } = useAuthStore();
+    const { startLoginUser } = useAuthStore();
 
     const onSubmit = async (values: FormValues) => {
-        await startLogin(values.email, values.password);
+        await startLoginUser(values.email, values.password);
     }
 
     return (
