@@ -1,1 +1,1 @@
-export { default as CreateProductModal } from './CreateProductModal';
+export { default as CreateProductModal } from './ProductModal.tsx';
