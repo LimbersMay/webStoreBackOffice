@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import {ModalLayout} from "../../../layouts";
 import {ModalField} from "../";
 import {useProductStore} from "../../../hooks";
+import {Product} from "../../types";
 
 interface CreateProductModalProps {
     action: 'Create' | 'Update' | 'Select';
