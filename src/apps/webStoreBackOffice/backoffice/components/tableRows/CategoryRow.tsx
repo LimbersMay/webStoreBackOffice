@@ -13,18 +13,18 @@ export const CategoryRow = (category: Category) => {
 
     return (
         <tr>
-            <td className="px-4 py-2 border">{id}</td>
-            <td className="px-4 py-2 border">{title}</td>
-            <td className="px-4 py-2 border">{description}</td>
-            <td className="px-4 py-2 border text-left">
+            <td className="border px-4 py-2">{id}</td>
+            <td className="border px-4 py-2">{title}</td>
+            <td className="border px-4 py-2">{description}</td>
+            <td className="border px-4 py-2 text-left">
                 <button
-                    className="px-4 py-2 mr-2 w-20 text-white bg-green-600 rounded hover:bg-green-700 disabled:bg-green-400"
+                    className="mr-2 w-20 rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:bg-green-400"
                     onClick={handleEdit}
                 >
                     Edit
                 </button>
                 <button
-                    className="px-4 py-2 text-white w-20 bg-red-500 rounded hover:bg-red-600 disabled:bg-red-400"
+                    className="w-20 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:bg-red-400"
                     onClick={() => startDeletingCategory(id)}
                 >
                     Delete
