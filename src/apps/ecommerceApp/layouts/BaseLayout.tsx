@@ -1,6 +1,5 @@
 import {NavLink} from "react-router-dom";
 import {ReactElement} from "react";
-import {useAuthStore} from "../hooks";
 
 interface NavLink {
     name: string,
@@ -14,12 +13,6 @@ interface BaseLayoutProps {
 
 export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
 
-    const { displayName , startLogout } = useAuthStore();
-
-    const handleLogout = () => {
-        startLogout();
-    }
-
     const isActiveLink = ({ isActive}: { isActive: boolean}) => {
 
         const baseClasses = "rounded-md p-2";
@@ -28,19 +21,19 @@ export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
             return `${baseClasses} bg-neutral-800 text-neutral-100`;
         }
 
-        return `${baseClasses} hover:bg-neutral-800 hover:text-neutral-100 text-neutral-400`;
+        return `${baseClasses} hover:bg-neutral-800 hover:text-neutral-100 text-black-800`;
     }
 
     return (
         <div>
-            <header className="flex justify-between bg-neutral-900 p-4 text-xl">
+            <header className="flex justify-around bg-white p-4 text-xl">
 
                 <div className="self-center font-bold">
                     <NavLink
                         to="/"
                         className={isActiveLink}
                     >
-                        Ecommerce Online
+                        Ecommerce App
                     </NavLink>
                 </div>
 
@@ -55,20 +48,6 @@ export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
                                 {name}
                             </NavLink>
                         ))
-                    }
-
-                    {
-                        displayName && (
-                            <div className="flex flex-row">
-                                <button className="rounded-md p-2 hover:bg-neutral-800 hover:text-neutral-100 text-neutral-400" onClick={handleLogout}>
-                                    Logout
-                                </button>
-
-                                <div className="self-center text-sm text-neutral-400">
-                                    { displayName }
-                                </div>
-                            </div>
-                        )
                     }
                 </div>
             </header>
