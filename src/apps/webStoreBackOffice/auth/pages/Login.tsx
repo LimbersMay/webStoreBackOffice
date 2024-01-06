@@ -59,7 +59,7 @@ export const Login = () => {
 
                             <button
                                 type="submit"
-                                className="w-96 bg-neutral-700 hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:pointer-events-none"
+                                className="w-96 rounded bg-neutral-700 px-4 py-2 font-bold text-white hover:bg-neutral-600 disabled:pointer-events-none disabled:opacity-50"
                                 disabled={isSubmitting}
                             >
                                 Login
