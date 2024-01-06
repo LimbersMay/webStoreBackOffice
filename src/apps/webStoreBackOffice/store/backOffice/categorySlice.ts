@@ -14,13 +14,13 @@ export const categorySlice = createSlice({
     name: 'categories',
     initialState: initialState,
     reducers: {
-        setProducts: (state, action: PayloadAction<Category[]>) => {
+        setCategories: (state, action: PayloadAction<Category[]>) => {
             state.categories = action.payload;
         },
-        setProduct: (state, action: PayloadAction<Category>) => {
+        setCategory: (state, action: PayloadAction<Category>) => {
             state.categories.push(action.payload)
         },
-        updateProduct: (state, action: PayloadAction<Partial<Category>>) => {
+        updateCategory: (state, action: PayloadAction<Partial<Category>>) => {
             const index = state.categories.findIndex(product => product.id === action.payload.id);
 
             state.categories[index] = {
@@ -28,7 +28,7 @@ export const categorySlice = createSlice({
                 ...action.payload
             };
         },
-        deleteProduct: (state, action: PayloadAction<string>) => {
+        deleteCategory: (state, action: PayloadAction<string>) => {
             state.categories = state.categories.filter(category => category.id !== action.payload);
         }
     }
@@ -37,10 +37,10 @@ export const categorySlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-    setProducts,
-    setProduct,
-    updateProduct,
-    deleteProduct
+    setCategories,
+    setCategory,
+    updateCategory,
+    deleteCategory
 } = categorySlice.actions;
 
-export const selectProduct = (state: RootState) => state.product;
+export const selectCategory = (state: RootState) => state.category;
