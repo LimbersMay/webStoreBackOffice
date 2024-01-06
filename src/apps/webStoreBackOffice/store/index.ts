@@ -1,3 +1,4 @@
 export * from './auth';
-export * from './store.ts';
-export * from './hooks.ts';
+export * from './backOffice';
+export * from './hooks';
+export * from './store';
