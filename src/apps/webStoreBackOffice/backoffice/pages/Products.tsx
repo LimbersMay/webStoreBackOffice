@@ -1,6 +1,6 @@
 import {AdminLayout} from "../../layouts";
 import {useProductStore} from "../../hooks";
-import {CrudTable, RoleRow} from "../components";
+import {CrudTable, ProductRow} from "../components";
 
 export const Products = () => {
 
@@ -8,6 +8,7 @@ export const Products = () => {
         'ID',
         'Título',
         'Descripción',
+        'Categoría',
         'URL de la imagen',
         'Precio',
         'Stock'
@@ -29,7 +30,7 @@ export const Products = () => {
                 <CrudTable headers={headers}>
                     {
                         products.map((product) => (
-                            <RoleRow key={product.id} {...product} />
+                            <ProductRow key={product.id} {...product} />
                         ))
                     }
                 </CrudTable>
