@@ -46,7 +46,7 @@ const CategoryModal = NiceModal.create(({action, category}: CategoryModalProps) 
 
                             <button
                                 type="submit"
-                                className="px-4 py-2 mt-4 text-white bg-green-500 rounded hover:bg-green-600"
+                                className="mt-4 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
                             >
                                 {
                                     action
