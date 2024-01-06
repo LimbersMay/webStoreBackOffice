@@ -11,8 +11,9 @@ import {
 } from "../store";
 import {FirebaseDB} from "../firebase";
 import NiceModal from "@ebay/nice-modal-react";
-import CreateProductModal from "../backoffice/components/modals/CreateProductModal.tsx";
+import ProductModal from "../backoffice/components/modals/ProductModal.tsx";
 import {getDirtyValues} from "../helpers";
+import {Product} from "../backoffice";
 
 
 export const useProductStore = () => {
@@ -32,6 +33,7 @@ export const useProductStore = () => {
         const products: Product[] = [];
 
         docs.forEach(doc => {
+
             products.push({
                 id: doc.id,
                 ...doc.data()
@@ -42,11 +44,12 @@ export const useProductStore = () => {
     }
 
     const startCreatingProduct = async () => {
-        const product = await  NiceModal.show(CreateProductModal, {
+        const product = await  NiceModal.show(ProductModal, {
             action: 'Create',
             product: {
                 title: '',
                 description: '',
+                categoryId: '',
                 imageURL: '',
                 price: 0,
                 stock: 0
@@ -65,7 +68,7 @@ export const useProductStore = () => {
     }
 
     const startUpdatingProduct = async ( product: Product ) => {
-        const productResult = await  NiceModal.show(CreateProductModal, {
+        const productResult = await  NiceModal.show(ProductModal, {
             action: 'Update',
             product: product!,
         }) as Product;
