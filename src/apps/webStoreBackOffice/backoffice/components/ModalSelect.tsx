@@ -1,5 +1,5 @@
 import {Field} from "formik";
-import {firstCapitalLetter} from "../../../helpers/firstCapitalLetter.ts";
+import {firstCapitalLetter} from "../../helpers";
 
 interface Option {
     value: string;
