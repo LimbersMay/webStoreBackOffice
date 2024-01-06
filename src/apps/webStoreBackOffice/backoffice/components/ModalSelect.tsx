@@ -22,7 +22,7 @@ export const ModalSelect = ({ name, fieldName, options }: ModalFieldProps) => {
                 name={ name }
                 id={ name }
                 placeholder={ fieldName ?? firstCapitalLetter(name) }
-                className="w-96 rounded-md p-2 border-2"
+                className="w-96 rounded-md border-2 p-2"
                 as="select"
             >
                 <option value="">Select an option</option>
