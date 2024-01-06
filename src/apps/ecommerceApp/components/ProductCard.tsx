@@ -4,16 +4,16 @@ export const ProductCard = ({ title, price, imageURL, stock, description }: Prod
 
     return (
         <div
-            className="flex flex-col items-center justify-center gap-5 bg-gray-100 w-72 p-10 rounded-xl"
+            className="flex w-72 flex-col items-center justify-between gap-5 rounded-xl border border-gray-200 bg-gray-50 p-10 shadow-xl"
         >
             {/* Product availability */}
             <div
-                className="flex flex-row justify-between w-full gap-5"
+                className="flex w-full flex-row justify-between gap-5"
             >
                 {
                     stock > 0 && (
                         <p
-                            className="text-sm text-green-500 font-bold"
+                            className="text-sm font-bold text-green-500"
                         >
                             Disponible
                         </p>
@@ -22,45 +22,54 @@ export const ProductCard = ({ title, price, imageURL, stock, description }: Prod
 
                 {
                     stock === 0 && (
-                        <p
-                            className="text-sm text-red-500 font-bold"
-                        >
-                            {
-                                /* If there's a description, it means the product is coming soon */
-                                description ?
-                                    description
-                                    :
-                                    "Sin stock"
-                            }
-                        </p>
+                        description ? (
+                            <p
+                                className="text-sm font-bold text-amber-600 flex flex-row"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                                </svg>
+
+                                { description }
+                            </p>
+                        ) : (
+                            <p
+                                className="text-sm font-bold text-red-500"
+                            >
+                                Sin stock
+                            </p>
+                        )
                     )
                 }
 
                 <p
-                    className="text-sm text-neutral-500 font-bold"
+                    className="text-sm font-bold text-neutral-500"
                 >
                     {stock} stock
                 </p>
             </div>
 
             <img
+                // Make sure all images have the same size
+                className="w-1/2"
                 src={imageURL}
-                alt="Peluche de gatito"
+                alt={title}
             />
 
-            <div className="flex flex-col items-center justify-center w-full gap-5">
-                <h1 className="text-xl font-bold text-center">{ title }</h1>
+            <div className="flex w-full flex-col items-center justify-center gap-5">
+                <h1 className="text-center text-xl font-bold">{ title }</h1>
 
                 <p className="text-xl">{price}.00$ MXN</p>
 
-                <div className="w-full flex flex-col gap-2">
+                <div className="flex w-full flex-col gap-2">
                     <button
-                        className="bg-green-500 text-white rounded-md p-2 flex flex-row justify-between gap-2 hover:bg-green-400 w-full"
+                        className="flex w-full flex-row justify-between gap-2 rounded-md bg-green-500 p-2 text-white hover:bg-green-400"
                     >
                         Preguntar
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 inline-block ml-2"
+                            className="ml-2 inline-block h-5 w-5"
                             fill="currentColor"
                             viewBox="0 0 24 24">
                             <path
@@ -69,12 +78,12 @@ export const ProductCard = ({ title, price, imageURL, stock, description }: Prod
                     </button>
 
                     {/* Compartir */}
-                    <div className="flex flex-row justify-between w-full gap-2">
+                    <div className="flex w-full flex-row justify-between gap-2">
                         <button
-                            className="bg-neutral-500 text-white rounded-md p-2 flex flex-row justify-between gap-2 hover:bg-neutral-400 w-full"
+                            className="flex w-full flex-row justify-between gap-2 rounded-md bg-neutral-500 p-2 text-white hover:bg-neutral-400"
                         >
                             Compartir
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
                             </svg>
                         </button>
