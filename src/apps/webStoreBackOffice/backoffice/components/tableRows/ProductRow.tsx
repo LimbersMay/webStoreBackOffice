@@ -1,20 +1,24 @@
-import {useProductStore} from "../../../hooks";
+import {useProductStore, useCategoryStore} from "../../../hooks";
+import {Product} from "../../types";
 
-export const RoleRow = (product: Product) => {
+export const ProductRow = (product: Product) => {
 
     const { startDeletingProduct, startUpdatingProduct } = useProductStore();
+    const { categories } = useCategoryStore();
 
     const handleEdit = async () => {
         await startUpdatingProduct(product);
     }
 
-    const { id, title, description, price, stock, imageURL } = product;
+    const { id, title, description, categoryId, price, stock, imageURL } = product;
+    const categoryTitle = categories.find((category) => category.id === categoryId)?.title;
 
     return (
         <tr>
             <td className="px-4 py-2 border">{id}</td>
             <td className="px-4 py-2 border">{title}</td>
             <td className="px-4 py-2 border">{description}</td>
+            <td className="px-4 py-2 border">{categoryTitle}</td>
             <td className="px-4 py-2 border">{imageURL}</td>
             <td className="px-4 py-2 border">{price}</td>
             <td className="px-4 py-2 border">{stock}</td>
