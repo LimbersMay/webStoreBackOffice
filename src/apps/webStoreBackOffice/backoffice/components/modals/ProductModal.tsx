@@ -2,34 +2,29 @@ import NiceModal, {useModal}  from "@ebay/nice-modal-react";
 import {ErrorMessage, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {ModalLayout} from "../../../layouts";
-import {ModalField} from "../";
-import {useProductStore} from "../../../hooks";
+import {ModalField, ModalSelect} from "../";
 import {Product} from "../../types";
+import {useCategoryStore} from "../../../hooks";
 
-interface CreateProductModalProps {
+interface ProductModalProps {
     action: 'Create' | 'Update' | 'Select';
     product: Omit<Product, 'id'>;
 }
 
-const CreateProductModal = NiceModal.create(({action, product}: CreateProductModalProps) => {
+const ProductModal = NiceModal.create(({action, product}: ProductModalProps) => {
 
     const modal = useModal();
-    const { setActiveProduct } = useProductStore();
+    const { categories } = useCategoryStore();
 
     const onSubmit = async (values: Omit<Product, 'id'>) => {
         modal.resolve(values);
         modal.remove();
     }
 
-    const onClose = () => {
-        setActiveProduct(null);
-        modal.remove();
-    }
-
     return (
         <ModalLayout
             action={action}
-            onClose={onClose}
+            onClose={ modal.remove }
         >
             <Formik
                 initialValues={product}
@@ -60,6 +55,15 @@ const CreateProductModal = NiceModal.create(({action, product}: CreateProductMod
                             <ModalField name="description" type="text" fieldName={"Descripción"}/>
                             <ErrorMessage name="description" component="div" className="font-bold text-red-500"/>
 
+                            <ModalSelect
+                                name="categoryId"
+                                options={
+                                categories.map((category) => ({
+                                    value: category.id,
+                                    label: category.title
+                                }))}
+                            />
+
                             <ModalField name="imageURL" type="text" fieldName={"URL de la imagen"}/>
                             <ErrorMessage name="imageURL" component="div" className="font-bold text-red-500"/>
 
@@ -85,4 +89,4 @@ const CreateProductModal = NiceModal.create(({action, product}: CreateProductMod
     )
 })
 
-export default CreateProductModal;
+export default ProductModal;
