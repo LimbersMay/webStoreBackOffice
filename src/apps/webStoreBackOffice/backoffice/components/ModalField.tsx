@@ -20,7 +20,7 @@ export const ModalField = ({ name, fieldName, type, disabled = false}: ModalFiel
                 name={ name }
                 id={ name }
                 placeholder={ fieldName ?? firstCapitalLetter(name) }
-                className="w-96 rounded-md p-2 border-2 disabled:bg-gray-200"
+                className="w-96 rounded-md border-2 p-2 disabled:bg-gray-200"
                 disabled={ disabled }
             />
         </div>
