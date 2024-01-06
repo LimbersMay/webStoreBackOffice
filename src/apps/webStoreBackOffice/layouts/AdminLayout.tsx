@@ -1,6 +1,6 @@
-import {ReactElement} from "react";
-
-import {BaseLayout} from "./BaseLayout";
+import {ReactElement, useEffect} from "react";
+import {useProductStore} from "../hooks";
+import {BaseLayout} from "./";
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
     const navLinks = [
@@ -13,6 +13,13 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
             path: "/categories"
         }
     ]
+
+    const { startLoadingProducts } = useProductStore();
+    useEffect(() => {
+        (async () => {
+            await startLoadingProducts();
+        })()
+    }, []);
 
     return (
         <BaseLayout navLinks={navLinks}>
