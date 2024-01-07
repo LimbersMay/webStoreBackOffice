@@ -1,6 +1,6 @@
 import {HTMLInputTypeAttribute} from "react";
 import {Field} from "formik";
-import {firstCapitalLetter} from "../../helpers";
+import {firstCapitalLetter} from "../helpers";
 
 interface ModalFieldProps {
     name: string;
