@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from "../store.ts";
-import {Category} from "../../backoffice";
+import {Category} from "../../types";
 
 interface initialState {
     categories: Category[];
