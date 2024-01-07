@@ -16,7 +16,7 @@ export const StoreApp = () => {
         return `${baseClasses} text-neutral-500 hover:text-neutral-900`;
     }
 
-    const { storeProducts, storeCategories, startLoadingStoreProducts, startLoadingStoreCategories } = useStoreApp();
+    const { storeProducts, storeCategories, startLoadingStoreProducts, startLoadingStoreCategories, bannerURL, bannerName } = useStoreApp();
 
     // Get the storeId from the URL
     const { storeId } = useParams();
@@ -57,8 +57,8 @@ export const StoreApp = () => {
                     >
                         <img
                             className="w-1/2 bg-neutral-50"
-                            src="https://s3.amazonaws.com/thumbnails.venngage.com/template/0908b95c-252a-45ad-9f70-b8db4887070c.png"
-                            alt="store"
+                            src={bannerURL}
+                            alt={bannerName}
                         />
                     </div>
 
