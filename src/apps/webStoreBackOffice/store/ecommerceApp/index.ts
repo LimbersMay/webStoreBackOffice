@@ -1,1 +1,1 @@
-export * from './useStore';
+export * from './storeSlice.ts';
