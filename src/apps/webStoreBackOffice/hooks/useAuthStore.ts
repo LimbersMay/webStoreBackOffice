@@ -1,5 +1,14 @@
-import {checkingCredentials, login, logout, selectAuth, useAppDispatch, useAppSelector} from "../store";
-import {loginLocal, logoutFirebase, signInLocal, signInWithGoogle} from "../firebase/firebase.ts";
+import {
+    checkingCredentials,
+    login,
+    logout,
+    selectAuth,
+    setCategories,
+    setProducts, setStoreSettings,
+    useAppDispatch,
+    useAppSelector
+} from "../store";
+import {loginLocal, logoutFirebase, signInLocal, signInWithGoogle} from "../firebase";
 import {authStatusTypes} from "../auth/types";
 
 
@@ -58,7 +67,20 @@ export const useAuthStore = () => {
 
         await logoutFirebase();
 
+        // Clean the store
         dispatch(logout(null));
+        dispatch(setProducts([]));
+        dispatch(setCategories([]));
+        dispatch(setStoreSettings({
+            id: '',
+            title: 'Default',
+            description: 'Default description',
+            bannerURL: 'https://s3.amazonaws.com/thumbnails.venngage.com/template/19fb13e4-a435-4bae-9bbf-ff1ed161cb31.png',
+            logoURL: 'https://icon-library.com/images/products-icon/products-icon-25.jpg',
+            phoneNumber: '9991112223',
+            bannerName: '',
+            logoName: '',
+        }));
     }
 
     return {
