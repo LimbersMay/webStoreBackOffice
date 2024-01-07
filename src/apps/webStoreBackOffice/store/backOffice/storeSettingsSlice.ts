@@ -27,6 +27,8 @@ export const storeSettingsSlice = createSlice({
             state.bannerURL = payload.payload.bannerURL;
             state.logoURL = payload.payload.logoURL;
             state.phoneNumber = payload.payload.phoneNumber;
+            state.bannerName = payload.payload.bannerName;
+            state.logoName = payload.payload.logoName;
         },
         updateStoreSettings: (state, payload: PayloadAction<Partial<StoreSettings>>) => {
             const updatedStoreSettings = {
