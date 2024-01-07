@@ -4,7 +4,8 @@ import {StoreApp} from "../pages";
 export const EcommerceRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={<StoreApp />}/>
+            <Route path="/:storeId" element={<StoreApp />}/>
+            <Route path="/:storeId/:categoryId" element={<StoreApp />}/>
 
             <Route path="/*" element={<Navigate to="/store" />}/>
         </Routes>
