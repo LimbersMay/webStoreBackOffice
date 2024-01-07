@@ -1,9 +1,9 @@
 import {ReactElement, useEffect} from "react";
-import {useProductStore} from "../hooks";
+import {useProductStore, useCategoryStore} from "../hooks";
 import {BaseLayout} from "./";
-import {useCategoryStore} from "../hooks/useCategoryStore.ts";
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
+
     const navLinks = [
         {
             name: "Productos",
@@ -12,6 +12,10 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
         {
             name: "Categorías",
             path: "/categories"
+        },
+        {
+            name: "Tienda",
+            path: `/store-config`
         }
     ]
 
