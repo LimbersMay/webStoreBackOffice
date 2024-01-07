@@ -1,2 +1,3 @@
 export * from './categorySlice';
-export * from './productSlice.ts';
+export * from './productSlice';
+export * from './storeSettingsSlice';

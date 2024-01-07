@@ -1,2 +1,3 @@
-export * from './Category.ts';
-export * from './Product.ts';
+export * from './Category';
+export * from './Product';
+export * from './StoreSettings.ts';
