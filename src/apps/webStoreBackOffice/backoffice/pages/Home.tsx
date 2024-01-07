@@ -4,7 +4,7 @@ export const Home = () => {
 
     return (
         <AdminLayout>
-            <div className="flex p-10 flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center p-10">
 
                 <h1 className={"text-4xl text-neutral-900"}>
                     Administración de la tienda online
