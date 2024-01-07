@@ -1,5 +1,5 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Categories, Home, Products} from "../backoffice";
+import {Categories, Home, Products, StoreConfig} from "../pages";
 
 export const WebStoreBackOfficeRouter = () => {
 
@@ -13,8 +13,13 @@ export const WebStoreBackOfficeRouter = () => {
             />
 
             <Route
-                path="/Categories"
+                path="/categories"
                 element={<Categories />}
+            />
+
+            <Route
+                path="/store-config"
+                element={<StoreConfig />}
             />
 
             <Route path="/*" element={<Navigate to="/webStore" />}/>
