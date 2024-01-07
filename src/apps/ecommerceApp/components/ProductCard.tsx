@@ -1,6 +1,9 @@
 import {Product} from "../../webStoreBackOffice";
+import {useStoreApp} from "../hooks";
 
 export const ProductCard = ({ title, price, imageURL, stock, description }: Product) => {
+
+    const { phoneNumber } = useStoreApp();
 
     return (
         <div
@@ -65,7 +68,7 @@ export const ProductCard = ({ title, price, imageURL, stock, description }: Prod
                 <div className="flex w-full flex-col gap-2">
                     <a
                         className="flex w-full flex-row justify-between gap-2 rounded-md bg-green-500 p-2 text-white hover:bg-green-400"
-                        href={`https://wa.me/9851070105?text=${encodeURI(`Hola, me interesa este artículo: ${title}`)}`}
+                        href={`https://wa.me/${ phoneNumber }?text=${encodeURI(`Hola, me interesa este artículo: ${title}`)}`}
                     >
                         Información
                         <svg
