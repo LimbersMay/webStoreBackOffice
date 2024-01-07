@@ -1,7 +1,6 @@
 import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from "firebase/firestore/lite";
 import {
     deleteProduct,
-    onSetActiveProduct,
     selectAuth,
     selectProduct,
     setProduct,
@@ -20,12 +19,8 @@ import {Product} from "../types";
 export const useProductStore = () => {
 
     const dispatch = useAppDispatch();
-    const { products, activeProduct: product } = useAppSelector(selectProduct);
+    const { products } = useAppSelector(selectProduct);
     const { uid } = useAppSelector(selectAuth);
-
-    const setActiveProduct = (product: Product | null) => {
-        dispatch(onSetActiveProduct(product));
-    }
 
     const startLoadingProducts = async () => {
         const collectionRef = collection(FirebaseDB, `${uid}/webstore/products`);
@@ -118,14 +113,11 @@ export const useProductStore = () => {
     return {
         // Properties
         products,
-        activeProduct: product,
-
 
         // Methods
         startLoadingProducts,
         startCreatingProduct,
         startDeletingProduct,
         startUpdatingProduct,
-        setActiveProduct
     }
 }
