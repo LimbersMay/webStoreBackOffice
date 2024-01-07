@@ -1,5 +1,5 @@
-import {AdminLayout} from "../../layouts";
-import {useCategoryStore} from "../../hooks";
+import {AdminLayout} from "../layouts";
+import {useCategoryStore} from "../hooks";
 import {CategoryRow, CrudTable} from "../components";
 
 export const Categories = () => {
