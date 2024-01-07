@@ -7,8 +7,8 @@ import {
 import {FirebaseDB} from "../firebase";
 import NiceModal from "@ebay/nice-modal-react";
 import {getDirtyValues} from "../helpers";
-import {Category, Product} from "../backoffice";
-import CategoryModal from "../backoffice/components/modals/CategoryModal";
+import {Category, Product} from "../types";
+import CategoryModal from "../components/modals/CategoryModal";
 
 
 export const useCategoryStore = () => {
