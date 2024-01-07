@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {authSlice, categorySlice, productsSlice} from "./";
+import {authSlice, categorySlice, productsSlice, storeSettingsSlice} from "./";
 import {storeSlice} from "./ecommerceApp";
 
 export const store = configureStore({
@@ -8,6 +8,7 @@ export const store = configureStore({
         product: productsSlice.reducer,
         category: categorySlice.reducer,
         store: storeSlice.reducer,
+        storeSettings: storeSettingsSlice.reducer
     }
 })
 
