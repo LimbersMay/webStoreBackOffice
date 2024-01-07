@@ -1,19 +1,20 @@
-import {collection, doc, getDocs, setDoc, deleteDoc, updateDoc } from "firebase/firestore/lite";
+import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from "firebase/firestore/lite";
 import {
     deleteProduct,
     onSetActiveProduct,
+    selectAuth,
     selectProduct,
     setProduct,
     setProducts,
-    selectAuth,
+    updateProduct,
     useAppDispatch,
-    useAppSelector, updateProduct
+    useAppSelector
 } from "../store";
 import {FirebaseDB} from "../firebase";
 import NiceModal from "@ebay/nice-modal-react";
-import ProductModal from "../backoffice/components/modals/ProductModal.tsx";
-import {getDirtyValues} from "../helpers";
-import {Product} from "../backoffice";
+import ProductModal from "../components/modals/ProductModal.tsx";
+import {removeImageFromFirebase, uploadImageToFirebase, getDirtyValues} from "../helpers";
+import {Product} from "../types";
 
 
 export const useProductStore = () => {
@@ -52,11 +53,20 @@ export const useProductStore = () => {
                 categoryId: '',
                 imageURL: '',
                 price: 0,
-                stock: 0
+                stock: 0,
+                imageName: '',
             }
         }) as Product;
 
         // If the user cancels the modal, product will not continue
+        // First, we upload the image to Firebase Storage
+
+        if (product.image) {
+            const response = await uploadImageToFirebase(product.image, `${uid}`);
+
+            product.imageURL = response.imageURL;
+            product.imageName = response.imageName;
+        }
 
         const newDoc = doc(collection(FirebaseDB, `${uid}/webstore/products`))
         await setDoc(newDoc, product);
@@ -76,6 +86,18 @@ export const useProductStore = () => {
         const dirtyValues = getDirtyValues<Product>(productResult, product!);
 
         if (Object.keys(dirtyValues).length == 0) return;
+
+        // If you want to update the image, we need to upload it to Firebase Storage
+        if (dirtyValues.image) {
+            // First, we remove the old image
+            await removeImageFromFirebase(product.imageName, `${uid}`);
+            const response = await uploadImageToFirebase(dirtyValues.image, `${uid}`);
+
+            dirtyValues.imageURL = response.imageURL;
+            dirtyValues.imageName = response.imageName;
+        }
+
+        delete dirtyValues.image;
 
         dirtyValues.id = product?.id;
 
