@@ -1,7 +1,7 @@
-import NiceModal, {useModal}  from "@ebay/nice-modal-react";
 import {ErrorMessage, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {ModalLayout} from "../../../layouts";
+import NiceModal, {useModal}  from "@ebay/nice-modal-react";
+import {ModalLayout} from "../../layouts";
 import {ModalField} from "../";
 import {Category} from "../../types";
 
