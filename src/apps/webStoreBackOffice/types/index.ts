@@ -1,2 +1,2 @@
-export * from './Category';
-export * from './Product';
+export * from './Category.ts';
+export * from './Product.ts';
