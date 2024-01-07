@@ -1,23 +1,29 @@
-import {BaseLayout} from "../layouts";
-import {ProductCard} from "../components/ProductCard.tsx";
-import {useStoreApp} from "../hooks/useStoreApp.ts";
 import {useEffect} from "react";
+import {NavLink, useParams} from "react-router-dom";
+import {BaseLayout} from "../layouts";
+import {ProductCard} from "../components";
+import {useStoreApp} from "../hooks";
 
 export const StoreApp = () => {
+    const isActiveLink = ({ isActive}: { isActive: boolean}) => {
 
-    const navLinks = [
-        {
-            name: "Home",
-            path: "/",
-        },
-        {
-            name: "Products",
-            path: "/products",
-        },
-    ];
+        const baseClasses = "rounded-md";
 
-    const storeId = new URLSearchParams(window.location.search).get("id");
+        if (isActive) {
+            return `${baseClasses} text-neutral-900 font-bold`;
+        }
+
+        return `${baseClasses} text-neutral-500 hover:text-neutral-900`;
+    }
+
     const { storeProducts, storeCategories, startLoadingStoreProducts, startLoadingStoreCategories } = useStoreApp();
+
+    // Get the storeId from the URL
+    const { storeId } = useParams();
+
+    // Get the query params from the URL
+    const categoryId = new URLSearchParams(window.location.search).get("categoryId");
+    const search = new URLSearchParams(window.location.search).get("search");
 
     useEffect(() => {
         if (storeId) {
@@ -28,23 +34,21 @@ export const StoreApp = () => {
         }
     }, []);
 
-    const isActiveLink = ({isActive}: { isActive: boolean }) => {
+    let productsToRender = storeProducts;
 
-        const baseClasses = "rounded-md p-2";
+    if (categoryId) {
+        productsToRender = storeProducts.filter((product) => product.categoryId === categoryId);
+    }
 
-        if (isActive) {
-            return `${baseClasses} bg-neutral-800 text-neutral-100`;
-        }
-
-        return `${baseClasses} hover:bg-neutral-800 hover:text-neutral-100 text-black-800`;
+    if (search) {
+        // Use regex to search for the product title
+        const regex = new RegExp(search, "i");
+        productsToRender = storeProducts.filter((product) => regex.test(product.title));
     }
 
     return (
-        <BaseLayout
-            navLinks={navLinks}
-        >
+        <BaseLayout>
             <>
-
                 {/* image */}
                 <div className="mt-5 mr-20 ml-20 flex flex-col items-center justify-center">
 
@@ -53,24 +57,36 @@ export const StoreApp = () => {
                     >
                         <img
                             className="w-1/2 bg-neutral-50"
-                            src="https://queue-it.com/media/ppcp1twv/product-drop.jpg"
+                            src="https://s3.amazonaws.com/thumbnails.venngage.com/template/0908b95c-252a-45ad-9f70-b8db4887070c.png"
                             alt="store"
                         />
                     </div>
 
                     {/* Categories section */}
                     <ul className="flex w-full justify-start gap-14 pt-10 pr-10 pb-5 pl-10">
-                        <li
+                        <NavLink
+                            to={`/store/${storeId}`}
+                            className={
+                                isActiveLink({
+                                    isActive: !categoryId
+                                })
+                            }
                         >
                             TODO
-                        </li>
+                        </NavLink>
                         {
                             storeCategories.map((category) => (
-                                <li
+                                <NavLink
                                     key={category.id}
+                                    to={`/store/${storeId}/?categoryId=${category.id}`}
+                                    className={
+                                        isActiveLink({
+                                            isActive: category.id === categoryId
+                                        })
+                                    }
                                 >
                                     { category.title.toUpperCase() }
-                                </li>
+                                </NavLink>
                             ))
                         }
                     </ul>
@@ -78,7 +94,7 @@ export const StoreApp = () => {
                     {/* Product card */}
                     <div className="grid grid-cols-5 gap-10">
                         {
-                            storeProducts.map((product) => (
+                            productsToRender.map((product) => (
                                 <ProductCard
                                     key={product.id}
                                     {...product}
