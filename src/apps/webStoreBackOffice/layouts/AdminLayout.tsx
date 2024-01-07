@@ -1,5 +1,5 @@
 import {ReactElement, useEffect} from "react";
-import {useProductStore, useCategoryStore} from "../hooks";
+import {useProductStore, useCategoryStore, useStoreSettingsStore} from "../hooks";
 import {BaseLayout} from "./";
 
 export const AdminLayout = ({ children }: { children: ReactElement }) => {
@@ -21,11 +21,13 @@ export const AdminLayout = ({ children }: { children: ReactElement }) => {
 
     const { startLoadingProducts } = useProductStore();
     const { startLoadingCategories } = useCategoryStore();
+    const { startLoadingStoreSettings } = useStoreSettingsStore();
 
     useEffect(() => {
         (async () => {
             await startLoadingCategories();
             await startLoadingProducts();
+            await startLoadingStoreSettings();
         })()
     }, []);
 
