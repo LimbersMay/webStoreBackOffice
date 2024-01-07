@@ -1,15 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from "../store.ts";
-import {Product} from "../../backoffice";
+import {Product} from "../../types";
 
 interface initialState {
     products: Product[];
-    activeProduct: Product | null;
 }
 
 const initialState: initialState = {
     products: [],
-    activeProduct: null
 }
 
 export const productsSlice = createSlice({
@@ -21,9 +19,6 @@ export const productsSlice = createSlice({
         },
         setProduct: (state, action: PayloadAction<Product>) => {
             state.products.push(action.payload)
-        },
-        onSetActiveProduct: (state, action: PayloadAction<Product | null>) => {
-            state.activeProduct = action.payload;
         },
         updateProduct: (state, action: PayloadAction<Partial<Product>>) => {
             const index = state.products.findIndex(product => product.id === action.payload.id);
@@ -44,7 +39,6 @@ export const productsSlice = createSlice({
 export const {
     setProducts,
     setProduct,
-    onSetActiveProduct,
     updateProduct,
     deleteProduct
 } = productsSlice.actions;
