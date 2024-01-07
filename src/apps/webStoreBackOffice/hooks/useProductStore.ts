@@ -63,6 +63,8 @@ export const useProductStore = () => {
             product.imageName = response.imageName;
         }
 
+        delete product.image;
+
         const newDoc = doc(collection(FirebaseDB, `${uid}/webstore/products`))
         await setDoc(newDoc, product);
 
