@@ -1,4 +1,4 @@
-import {useProductStore, useCategoryStore} from "../../../hooks";
+import {useProductStore, useCategoryStore} from "../../hooks";
 import {Product} from "../../types";
 
 export const ProductRow = (product: Product) => {

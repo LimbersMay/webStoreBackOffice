@@ -1,10 +1,10 @@
 import NiceModal, {useModal}  from "@ebay/nice-modal-react";
 import {ErrorMessage, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {ModalLayout} from "../../../layouts";
+import {ModalLayout} from "../../layouts";
 import {ModalField, ModalSelect} from "../";
 import {Product} from "../../types";
-import {useCategoryStore} from "../../../hooks";
+import {useCategoryStore} from "../../hooks";
 
 interface ProductModalProps {
     action: 'Create' | 'Update' | 'Select';

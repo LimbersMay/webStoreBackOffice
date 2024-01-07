@@ -1,5 +1,5 @@
+import { useCategoryStore } from "../../hooks";
 import {Category} from "../../types";
-import {useCategoryStore} from "../../../hooks";
 
 export const CategoryRow = (category: Category) => {
 
