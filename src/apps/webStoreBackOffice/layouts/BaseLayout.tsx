@@ -60,7 +60,7 @@ export const BaseLayout = ({ children, navLinks }: BaseLayoutProps ) => {
                     {
                         displayName && (
                             <div className="flex flex-row">
-                                <button className="rounded-md p-2 hover:bg-neutral-800 hover:text-neutral-100 text-neutral-400" onClick={handleLogout}>
+                                <button className="rounded-md p-2 text-neutral-400 hover:bg-neutral-800 hover:text-neutral-100" onClick={handleLogout}>
                                     Logout
                                 </button>
 
