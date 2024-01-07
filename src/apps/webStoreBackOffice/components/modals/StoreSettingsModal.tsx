@@ -2,7 +2,7 @@ import {ErrorMessage, Form, Formik} from "formik";
 import * as Yup from "yup";
 import NiceModal, {useModal}  from "@ebay/nice-modal-react";
 import {ModalLayout} from "../../layouts";
-import {ModalField} from "../";
+import {ModalField, ModalImageInput} from "../";
 import {StoreSettings} from "../../types";
 
 export interface StoreDTO extends StoreSettings{
@@ -40,7 +40,9 @@ export const StoreSettingsModal = NiceModal.create(({action, storeSettings}: Sto
                 })}
             >
                 {
-                    ({}) => (
+                    ({
+                        setFieldValue
+                     }) => (
                         <Form className="flex flex-col gap-2">
 
                             <ModalField name="title" type="text" fieldName={"Título"}/>
@@ -48,6 +50,28 @@ export const StoreSettingsModal = NiceModal.create(({action, storeSettings}: Sto
 
                             <ModalField name="description" type="text" fieldName={"Descripción"}/>
                             <ErrorMessage name="description" component="div" className="font-bold text-red-500"/>
+
+                            <ModalImageInput
+                                name="logo"
+                                fieldName="Logo"
+                                onChange={async (event) => {
+                                    await setFieldValue("logo", event.currentTarget.files?.[0]);
+                                }}
+                            />
+
+                            <ModalImageInput
+                                name="banner"
+                                fieldName="Banner"
+                                onChange={async (event) => {
+                                    await setFieldValue("banner", event.currentTarget.files?.[0]);
+                                }}
+                            />
+
+                            <ModalField
+                                name="phoneNumber"
+                                type="text"
+                                fieldName={"Teléfono"}
+                            />
 
                             <button
                                 type="submit"
