@@ -1,5 +1,5 @@
-import {AdminLayout} from "../../layouts";
-import {useProductStore} from "../../hooks";
+import {AdminLayout} from "../layouts";
+import {useProductStore} from "../hooks";
 import {CrudTable, ProductRow} from "../components";
 import {useState} from "react";
 
