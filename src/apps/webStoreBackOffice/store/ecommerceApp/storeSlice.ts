@@ -1,15 +1,26 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from "../store.ts";
-import {Category, Product} from "../../types";
+import {Category, Product, StoreSettings} from "../../types";
 
 interface initialState {
     storeProducts: Product[];
-    storeCategories: Category[]
+    storeCategories: Category[];
+    storeConfiguration: StoreSettings;
 }
 
 const initialState: initialState = {
     storeProducts: [],
-    storeCategories: []
+    storeCategories: [],
+    storeConfiguration: {
+        id: '',
+        title: '',
+        description: '',
+        bannerURL: '',
+        bannerName: '',
+        logoURL: '',
+        logoName: '',
+        phoneNumber: ''
+    }
 }
 
 export const storeSlice = createSlice({
@@ -21,6 +32,9 @@ export const storeSlice = createSlice({
         },
         setStoreCategories: (state, action: PayloadAction<Category[]>) => {
             state.storeCategories = action.payload;
+        },
+        setStoreConfiguration: (state, action: PayloadAction<StoreSettings>) => {
+            state.storeConfiguration = action.payload;
         }
     }
 });
@@ -28,6 +42,10 @@ export const storeSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 
-export const { setStoreProducts, setStoreCategories } = storeSlice.actions;
+export const {
+    setStoreProducts,
+    setStoreCategories,
+    setStoreConfiguration
+} = storeSlice.actions;
 
 export const selectStore = (state: RootState) => state.store;
