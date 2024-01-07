@@ -1,5 +1,6 @@
-import {FormEvent, ReactElement, useState} from "react";
+import {FormEvent, ReactElement, useEffect, useState} from "react";
 import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useStoreApp} from "../hooks";
 
 interface BaseLayoutProps {
     children: ReactElement,
@@ -8,7 +9,14 @@ interface BaseLayoutProps {
 export const BaseLayout = ({children}: BaseLayoutProps) => {
 
     const [ productTitleToSearch, setProductTitleToSearch ] = useState<string>("");
+    const { startLoadingStoreSettings, title, logoURL } = useStoreApp();
+
+    console.log("logoURL", logoURL)
+
     const navigation = useNavigate();
+
+    // Get the storeId from the URL
+    const {storeId} = useParams();
 
     const isActiveLink = ({isActive}: { isActive: boolean }) => {
 
@@ -27,7 +35,26 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
         navigation(`/store/${storeId}?search=${productTitleToSearch}`);
     }
 
-    const {storeId} = useParams();
+    useEffect(() => {
+        (async () => {
+            await startLoadingStoreSettings(`${storeId}`);
+        })();
+    }, []);
+
+    useEffect(() => {
+        document.title = title;
+
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+            link = document.createElement('link');
+            // @ts-ignore
+            link.rel = 'icon';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        // @ts-ignore
+        link.href = logoURL;
+    }, [title, logoURL]);
+
 
     return (
         <div>
@@ -38,7 +65,9 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
                         to={`/store/${storeId}`}
                         className={isActiveLink}
                     >
-                        Ecommerce App
+                        {
+                            title
+                        }
                     </NavLink>
                 </div>
 
