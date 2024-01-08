@@ -10,6 +10,7 @@ import {
 } from "../store";
 import {loginLocal, logoutFirebase, signInLocal, signInWithGoogle} from "../firebase";
 import {authStatusTypes} from "../auth/types";
+import {useStoreSettingsStore} from "./useStoreSettingsStore.ts";
 
 
 interface CreatingUserProps {
@@ -21,6 +22,7 @@ interface CreatingUserProps {
 export const useAuthStore = () => {
 
     const {uid, displayName, email} = useAppSelector(selectAuth);
+    const { initStoreSettings } = useStoreSettingsStore();
 
     const dispatch = useAppDispatch();
 
@@ -47,6 +49,7 @@ export const useAuthStore = () => {
 
         if (!ok) return dispatch(logout( errorMessage ));
 
+        await initStoreSettings(`${uid}`);
         dispatch(login({uid, displayName, email }));
     }
 
