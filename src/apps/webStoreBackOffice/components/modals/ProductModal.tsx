@@ -36,7 +36,8 @@ const ProductModal = NiceModal.create(({action, product}: ProductModalProps) => 
                         .required('Required'),
                     stock: Yup.number()
                         .required('Required'),
-
+                    categoryId: Yup.string()
+                        .required('Required'),
                 })}
             >
                 {
@@ -61,6 +62,8 @@ const ProductModal = NiceModal.create(({action, product}: ProductModalProps) => 
                                 }))}
                             />
 
+                            <ErrorMessage name="categoryId" component="div" className="font-bold text-red-500"/>
+
                             <div className="mb-3">
                                 <label
                                     htmlFor={"formFile"}
@@ -77,6 +80,7 @@ const ProductModal = NiceModal.create(({action, product}: ProductModalProps) => 
                                     }}
                                 />
                             </div>
+                            <ErrorMessage name="image" component="div" className="font-bold text-red-500"/>
 
                             <ModalField name="price" type="number" fieldName={"Precio"}/>
                             <ErrorMessage name="price" component="div" className="font-bold text-red-500"/>
