@@ -11,8 +11,6 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
     const [ productTitleToSearch, setProductTitleToSearch ] = useState<string>("");
     const { startLoadingStoreSettings, title, logoURL } = useStoreApp();
 
-    console.log("logoURL", logoURL)
-
     const navigation = useNavigate();
 
     // Get the storeId from the URL
