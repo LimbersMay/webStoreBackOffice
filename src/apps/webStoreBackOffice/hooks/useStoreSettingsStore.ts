@@ -1,4 +1,4 @@
-import {collection, doc, getDocs, updateDoc} from "firebase/firestore/lite";
+import {collection, doc, getDocs, setDoc, updateDoc} from "firebase/firestore/lite";
 import NiceModal from "@ebay/nice-modal-react";
 import {FirebaseDB} from "../firebase";
 import {
@@ -74,13 +74,35 @@ export const useStoreSettingsStore = () => {
         delete dirtyValues.banner;
 
         dirtyValues.id = storeSettings?.id;
-        console.log(dirtyValues)
 
         // If the user cancels the modal, product will not continue
         const docRef = doc(FirebaseDB, `${uid}/webstore/store/${dirtyValues.id}`);
         await updateDoc(docRef, { ...dirtyValues });
 
         dispatch(updateStoreSettings(dirtyValues));
+    }
+
+    const initStoreSettings = async (userId: string) => {
+
+        const storeSettings = {
+            title: 'Default',
+            description: 'Default description',
+            bannerURL: 'https://s3.amazonaws.com/thumbnails.venngage.com/template/19fb13e4-a435-4bae-9bbf-ff1ed161cb31.png',
+            logoURL: 'https://icon-library.com/images/products-icon/products-icon-25.jpg',
+            phoneNumber: '9991112223',
+            bannerName: '',
+            logoName: '',
+        }as StoreSettings;
+
+        const newDoc = doc(collection(FirebaseDB, `${userId}/webstore/store`));
+        await setDoc(newDoc, storeSettings);
+
+        console.log(newDoc)
+
+        storeSettings.id = newDoc.id;
+
+        // dispatch
+        dispatch(setStoreSettings(storeSettings));
     }
 
     return {
@@ -97,5 +119,6 @@ export const useStoreSettingsStore = () => {
         // Methods
         startLoadingStoreSettings,
         startUpdatingStoreSettings,
+        initStoreSettings
     }
 }
