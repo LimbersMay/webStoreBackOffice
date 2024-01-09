@@ -5,7 +5,7 @@ import {ProductCard} from "../components";
 import {useStoreApp} from "../hooks";
 
 export const StoreApp = () => {
-    const isActiveLink = ({ isActive}: { isActive: boolean}) => {
+    const isActiveLink = ({isActive}: { isActive: boolean }) => {
 
         const baseClasses = "rounded-md";
 
@@ -16,10 +16,17 @@ export const StoreApp = () => {
         return `${baseClasses} text-neutral-500 hover:text-neutral-900`;
     }
 
-    const { storeProducts, storeCategories, startLoadingStoreProducts, startLoadingStoreCategories, bannerURL, bannerName } = useStoreApp();
+    const {
+        storeProducts,
+        storeCategories,
+        startLoadingStoreProducts,
+        startLoadingStoreCategories,
+        bannerURL,
+        bannerName
+    } = useStoreApp();
 
     // Get the storeId from the URL
-    const { storeId } = useParams();
+    const {storeId} = useParams();
 
     // Get the query params from the URL
     const categoryId = new URLSearchParams(window.location.search).get("categoryId");
@@ -36,34 +43,42 @@ export const StoreApp = () => {
 
     let productsToRender = storeProducts;
 
-    if (categoryId) {
-        productsToRender = storeProducts.filter((product) => product.categoryId === categoryId);
-    }
-
-    if (search) {
+    if (search && categoryId) {
         // Use regex to search for the product title
         const regex = new RegExp(search, "i");
-        productsToRender = storeProducts.filter((product) => regex.test(product.title));
+        productsToRender = storeProducts.filter((product) => regex.test(product.title) && product.categoryId === categoryId || product.id === search);
+    } else {
+        if (search) {
+            // Use regex to search for the product title
+            const regex = new RegExp(search, "i");
+            productsToRender = storeProducts.filter((product) => regex.test(product.title) || product.id === search);
+        }
+
+        if (categoryId) {
+            productsToRender = storeProducts.filter((product) => product.categoryId === categoryId);
+        }
     }
+
 
     return (
         <BaseLayout>
             <>
+
                 {/* image */}
-                <div className="mt-5 mr-20 ml-20 flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center md:mr-20 md:ml-20">
 
                     <div
                         className="flex w-full flex-col items-center justify-center gap-5 rounded-xl bg-neutral-100"
                     >
                         <img
-                            className="w-1/2 bg-neutral-50"
+                            className="w-full md:w-1/2 md:rounded-xl"
                             src={bannerURL}
                             alt={bannerName}
                         />
                     </div>
 
                     {/* Categories section */}
-                    <ul className="flex w-full justify-start gap-14 pt-10 pr-10 pb-5 pl-10">
+                    <ul className="flex w-full justify-start gap-14 pt-10 pr-10 pb-5 pl-10 overflow-x-auto">
                         <NavLink
                             to={`/store/${storeId}`}
                             className={
@@ -85,15 +100,16 @@ export const StoreApp = () => {
                                         })
                                     }
                                 >
-                                    { category.title.toUpperCase() }
+                                    {category.title.toUpperCase()}
                                 </NavLink>
                             ))
                         }
                     </ul>
 
                     {/* Product card */}
-                    <div className="grid grid-cols-5 gap-10">
+                    <div className="grid grid-cols-2 mt-5 gap-1 md:grid-cols-2 lg:grid-cols-5 md:gap-10">
                         {
+
                             productsToRender.map((product) => (
                                 <ProductCard
                                     key={product.id}
