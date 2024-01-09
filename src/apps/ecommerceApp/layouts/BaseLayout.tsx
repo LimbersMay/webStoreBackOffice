@@ -56,9 +56,9 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
 
     return (
         <div>
-            <header className="flex justify-around p-3 text-xl">
+            <header className="flex p-3 text-xl justify-between items-center md:justify-around">
 
-                <div className="self-center">
+                <div className="">
                     <NavLink
                         to={`/store/${storeId}`}
                         className={isActiveLink}
@@ -74,10 +74,9 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
                 <form
                     onSubmit={onSubmit}
                 >
-                    <div className="flex justify-center items-center px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-center items-center sm:px-6 lg:px-8">
                         <input type="text"
-                               className="h-14 w-96 pr-8 pl-5 rounded focus:shadow focus:outline-none focus:text-neutral-800"
-                               placeholder="Buscar producto..."
+                               className="h-10 w-36 pr-8 pl-5 rounded-xl focus:shadow focus:outline-none focus:text-neutral-800 border-solid border-2 border-neutral-100 md:w-96 md:border-neutral-200"
                                value={productTitleToSearch}
                                onChange={(e) => setProductTitleToSearch(e.target.value)}
                         />
