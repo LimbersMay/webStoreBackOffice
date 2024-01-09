@@ -6,12 +6,13 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {store} from "./apps/webStoreBackOffice";
 import NiceModal from "@ebay/nice-modal-react";
+import {SnackbarProvider} from "notistack";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
+        <SnackbarProvider />
         <Provider store={store}>
             <NiceModal.Provider>
-
                 <BrowserRouter>
                     <App/>
                 </BrowserRouter>
